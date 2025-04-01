@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Agriculture</title>
+    <script>
+        async function getRecommendation(endpoint, data) {
+            const response = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            alert(result.recommended_crop || result.recommended_fertilizer || result.recommended_pesticide);
+        }
+    </script>
+</head>
+<body>
+    <h1>Smart Agriculture System</h1>
+    
+    <h2>Crop Recommendation</h2>
+    <label>Soil Type: <input id="soil" type="text"></label>
+    <label>Weather: <input id="weather" type="text"></label>
+    <button onclick="getRecommendation('/recommend_crop', { soil_type: document.getElementById('soil').value, weather: document.getElementById('weather').value })">Get Crop</button>
+
+    <h2>Fertilizer Recommendation</h2>
+    <label>Crop Type: <input id="crop" type="text"></label>
+    <label>Nutrient Deficiency: <input id="nutrient" type="text"></label>
+    <button onclick="getRecommendation('/recommend_fertilizer', { crop_type: document.getElementById('crop').value, nutrient_deficiency: document.getElementById('nutrient').value })">Get Fertilizer</button>
+
+    <h2>Pesticide Suggestion</h2>
+    <label>Leaf Condition: <input id="leaf" type="text"></label>
+    <button onclick="getRecommendation('/suggest_pesticide', { leaf_condition: document.getElementById('leaf').value })">Get Pesticide</button>
+</body>
+</html>
